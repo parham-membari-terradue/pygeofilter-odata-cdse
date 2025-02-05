@@ -2,7 +2,16 @@
 
 As stated, this library was initially developed to support CDSE use cases only, so please make sure the parameters users can query.
 
-## Sentinel 1
+See the relative section for each supported _Sentinel-X_ attributes:
+
+* [Sentinel 1](#sentinel-1)
+* [Sentinel-1-RTC](#sentinel-1-rtc)
+* [Sentinel-2](#sentinel-2)
+* [Sentinel-3](#sentinel-3)
+* [Sentinel-5P](#sentinel-5p)
+* [Additional Attributes](#additional-attributes)
+
+## Sentinel-1
 
 | Name                              | Type             |
 |-----------------------------------|------------------|
@@ -39,7 +48,7 @@ As stated, this library was initially developed to support CDSE use cases only, 
 | `startTimeFromAscendingNode`      | `Double`         |
 | `completionTimeFromAscendingNode` | `Double`         |
 
-## Sentinel-1 RTC
+## Sentinel-1-RTC
 
 | Name                       | Type      |
 |----------------------------|-----------|
@@ -85,7 +94,6 @@ As stated, this library was initially developed to support CDSE use cases only, 
 | `illuminationZenithAngle`  | `Double`         |
 | `sourceProductOriginDate`  | `String`         |
 | `platformSerialIdentifier` | `String`         |
-
 
 ## Sentinel-3
 
@@ -149,3 +157,10 @@ As stated, this library was initially developed to support CDSE use cases only, 
 | `instrumentShortName`      | `String`         |
 | `platformSerialIdentifier` | `String`         |
 
+## Additional Attributes
+
+| Name                       | Type             |
+|----------------------------|------------------|
+| `Collection/Name`        | `String`         |
+| `PublicationDate`        | `DateTimeOffset` |
+| `ModificationDate`       | `DateTimeOffset` |

@@ -1,0 +1,44 @@
+{
+    "@context": "https://doi.org/10.5063/schema/codemeta-2.0",
+    "@type": "SoftwareSourceCode",
+    "license": "https://spdx.org/licenses/CC-BY-NC-SA-4.0",
+    "codeRepository": "git@github.com:Terradue/pygeofilter-odata-cdse.git",
+    "dateCreated": "2025-22-05",
+    "datePublished": "2025-22-05",
+    "dateModified": "2025-22-06",
+    "name": "pygeofilter-odata-cdse",
+    "version": "1.0.0",
+    "description": "pygeofilter CQL2 to CDSE OData filtering layer",
+    "developmentStatus": "active",
+    "downloadUrl": "https://github.com/Terradue/pygeofilter-odata-cdse/releases/",
+    "relatedLink": [
+        "https://terradue.github.io/pygeofilter-odata-cdse/"
+    ],
+    "funder": {
+        "@type": "Organization",
+        "name": "Terradue"
+    },
+    "keywords": [
+        "CQL2", "CQL2JSON", "OData"
+    ],
+    "programmingLanguage": [
+        "Python", "CQL2"
+    ],
+    "softwareRequirements": [
+        "python3"
+    ],
+    "author": [
+        {
+            "@type": "Person",
+            "givenName": "Fabrice",
+            "familyName": "Brito",
+            "email": "fabrice.brito@terradue.com"
+        },
+        {
+            "@type": "Person",
+            "givenName": "Simone",
+            "familyName": "Tripodi",
+            "email": "simone.tripodi@terradue.com"
+        }
+    ]
+}

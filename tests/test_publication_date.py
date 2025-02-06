@@ -74,16 +74,11 @@ class TestPublicationDate(unittest.TestCase):
 
     def test_publication_date_interval_after(self):
         cql2_filter = {
-            "op": "and",
-            "args": [
-                {
-                    "op": "t_after",
-                     "args": [
-                         {"property": "PublicationDate"},
-                         {"interval": ["2023-02-01T00:00:00Z", "2023-02-01T23:59:59Z"]},
-                    ]
-                },
-            ],
+            "op": "t_after",
+             "args": [
+                 {"property": "PublicationDate"},
+                 {"interval": ["2023-02-01T00:00:00Z", "2023-02-01T23:59:59Z"]},
+            ]
         }
         expected = "PublicationDate gt 2023-02-01T00:00:00+00:00 and PublicationDate le 2023-02-01T23:59:59+00:00"
         self.assertEqual(
@@ -92,16 +87,11 @@ class TestPublicationDate(unittest.TestCase):
 
     def test_publication_date_interval_before(self):
         cql2_filter = {
-            "op": "and",
-            "args": [
-                {
-                    "op": "t_before",
-                     "args": [
-                         {"property": "PublicationDate"},
-                         {"interval": ["2023-02-01T00:00:00Z", "2023-02-01T23:59:59Z"]},
-                    ]
-                },
-            ],
+            "op": "t_before",
+             "args": [
+                 {"property": "PublicationDate"},
+                 {"interval": ["2023-02-01T00:00:00Z", "2023-02-01T23:59:59Z"]},
+            ]
         }
         expected = "PublicationDate ge 2023-02-01T00:00:00+00:00 and PublicationDate lt 2023-02-01T23:59:59+00:00"
         self.assertEqual(
@@ -110,16 +100,11 @@ class TestPublicationDate(unittest.TestCase):
 
     def test_publication_date_interval_begin(self):
         cql2_filter = {
-            "op": "and",
-            "args": [
-                {
-                    "op": "t_begins",
-                     "args": [
-                         {"property": "PublicationDate"},
-                         {"interval": ["2023-02-01T00:00:00Z", "2023-02-01T23:59:59Z"]},
-                    ]
-                },
-            ],
+            "op": "t_begins",
+             "args": [
+                 {"property": "PublicationDate"},
+                 {"interval": ["2023-02-01T00:00:00Z", "2023-02-01T23:59:59Z"]},
+            ]
         }
         expected = "PublicationDate ge 2023-02-01T00:00:00+00:00 and PublicationDate le 2023-02-01T23:59:59+00:00"
         self.assertEqual(
@@ -128,16 +113,11 @@ class TestPublicationDate(unittest.TestCase):
 
     def test_publication_date_interval_ends(self):
         cql2_filter = {
-            "op": "and",
-            "args": [
-                {
-                    "op": "t_ends",
-                     "args": [
-                         {"property": "PublicationDate"},
-                         {"interval": ["2023-02-01T00:00:00Z", "2023-02-01T23:59:59Z"]},
-                    ]
-                },
-            ],
+            "op": "t_ends",
+             "args": [
+                 {"property": "PublicationDate"},
+                 {"interval": ["2023-02-01T00:00:00Z", "2023-02-01T23:59:59Z"]},
+            ]
         }
         expected = "PublicationDate ge 2023-02-01T00:00:00+00:00 and PublicationDate le 2023-02-01T23:59:59+00:00"
         self.assertEqual(

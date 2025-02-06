@@ -13,67 +13,43 @@ class TestCDSEEvaluator(unittest.TestCase):
         pass
 
     def test_comparison_le(self):
-        cql2_filter = {
-            "op": "and",
-            "args": [{"op": "<=", "args": [{"property": "cloudCover"}, 20]}],
-        }
+        cql2_filter = {"op": "<=", "args": [{"property": "cloudCover"}, 20]}
         expected = "Attributes/OData.CSC.DoubleAttribute/any(att:att/Name eq 'cloudCover' and att/OData.CSC.DoubleAttribute/Value le 20)"
         self.assertEqual(
             expected, to_cdse(cql2_filter)
         )
 
     def test_comparison_ge(self):
-        cql2_filter = {
-            "op": "and",
-            "args": [{"op": ">=", "args": [{"property": "cloudCover"}, 20]}],
-        }
+        cql2_filter = {"op": ">=", "args": [{"property": "cloudCover"}, 20]}
         expected = "Attributes/OData.CSC.DoubleAttribute/any(att:att/Name eq 'cloudCover' and att/OData.CSC.DoubleAttribute/Value ge 20)"
         self.assertEqual(
             expected, to_cdse(cql2_filter)
         )
 
     def test_comparison_string(self):
-        cql2_filter = {
-            "op": "and",
-            "args": [
-                {"op": "=", "args": [{"property": "platformShortName"}, "Sentinel-2A"]}
-            ],
-        }
+        cql2_filter = {"op": "=", "args": [{"property": "platformShortName"}, "Sentinel-2A"]}
         expected = "Attributes/OData.CSC.StringAttribute/any(att:att/Name eq 'platformShortName' and att/OData.CSC.StringAttribute/Value eq 'Sentinel-2A')"  # this should be all single quotes??
         self.assertEqual(
             expected, to_cdse(cql2_filter)
         )
 
     def test_comparison_double(self):
-        cql2_filter = {
-            "op": "and",
-            "args": [{"op": "=", "args": [{"property": "cloudCover"}, 20]}],
-        }
+        cql2_filter = {"op": "=", "args": [{"property": "cloudCover"}, 20]}
         expected = "Attributes/OData.CSC.DoubleAttribute/any(att:att/Name eq 'cloudCover' and att/OData.CSC.DoubleAttribute/Value eq 20)"
         self.assertEqual(
             expected, to_cdse(cql2_filter)
         )
 
     def test_comparison_integer(self):
-        cql2_filter = {
-            "op": "and",
-            "args": [{"op": "=", "args": [{"property": "orbitNumber"}, 20]}],
-        }
+        cql2_filter = {"op": "=", "args": [{"property": "orbitNumber"}, 20]}
         expected = "Attributes/OData.CSC.IntegerAttribute/any(att:att/Name eq 'orbitNumber' and att/OData.CSC.IntegerAttribute/Value eq 20)"
         self.assertEqual(
             expected, to_cdse(cql2_filter)
         )
 
     def test_collection_name(self):
-        cql2_filter = {
-            "op": "and",
-            "args": [
-                {"op": "=", "args": [{"property": "Collection/Name"}, "SENTINEL-2"]}
-            ],
-        }
-
+        cql2_filter = {"op": "=", "args": [{"property": "Collection/Name"}, "SENTINEL-2"]}
         expected = "Collection/Name eq 'SENTINEL-2'"
-
         self.assertEqual(
             expected, to_cdse(cql2_filter)
         )

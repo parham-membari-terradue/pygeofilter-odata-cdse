@@ -16,24 +16,19 @@ class TestGeographicCriteria(unittest.TestCase):
     def test_search_polygon(self):
         # To search for products intersecting the specified polygon
         cql2_filter = {
-            "op": "and",
+            "op": "s_intersects",
             "args": [
+                {"property": "geometry"},
                 {
-                    "op": "s_intersects",
-                    "args": [
-                        {"property": "geometry"},
-                        {
-                            "type": "Polygon",
-                            "coordinates": [
-                                [
-                                    [12.655118166047592, 47.44667197521409],
-                                    [21.39065656328509, 48.347694733853245],
-                                    [28.334291357162826, 41.877123516783655],
-                                    [17.47086198383573, 40.35854475076158],
-                                    [12.655118166047592, 47.44667197521409],
-                                ]
-                            ],
-                        },
+                    "type": "Polygon",
+                    "coordinates": [
+                        [
+                            [12.655118166047592, 47.44667197521409],
+                            [21.39065656328509, 48.347694733853245],
+                            [28.334291357162826, 41.877123516783655],
+                            [17.47086198383573, 40.35854475076158],
+                            [12.655118166047592, 47.44667197521409],
+                        ]
                     ],
                 },
             ],

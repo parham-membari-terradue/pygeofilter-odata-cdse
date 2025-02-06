@@ -44,16 +44,14 @@ class CDSEEvaluator(Evaluator):
 
     @handle(ast.Comparison, subclasses=True)
     def comparison(self, node, lhs, rhs):
-        lhs = node.lhs.name
-
-        if 'Collection/Name' == lhs:
-            return f"{lhs} {COMPARISON_OP_MAP.get(node.op)} {rhs}"
+        if 'Collection/Name' == node.lhs.name:
+            return f"{node.lhs.name} {COMPARISON_OP_MAP.get(node.op)} {rhs}"
 
         if "Date" in lhs:
             rhs = node.rhs
 
-        attr_type = get_attribute_type(lhs)
-        return f"Attributes/OData.CSC.{attr_type}Attribute/any(att:att/Name eq '{lhs}' and att/OData.CSC.{attr_type}Attribute/Value {COMPARISON_OP_MAP[node.op]} {rhs})"
+        attr_type = get_attribute_type(node.lhs.name)
+        return f"Attributes/OData.CSC.{attr_type}Attribute/any(att:att/Name eq {lhs} and att/OData.CSC.{attr_type}Attribute/Value {COMPARISON_OP_MAP[node.op]} {rhs})"
 
     @handle(ast.Between)
     def between(self, node, lhs, low, high):
@@ -86,9 +84,8 @@ class CDSEEvaluator(Evaluator):
 
     @handle(ast.In)
     def in_(self, node, lhs, *options):
-        lhs = node.lhs.name
-        attr_type = get_attribute_type(lhs)
-        mapper = lambda rhs: f"Attributes/OData.CSC.{attr_type}Attribute/any(att:att/Name eq '{lhs}' and att/OData.CSC.{attr_type}Attribute/Value eq {rhs})"
+        attr_type = get_attribute_type(node.lhs.name)
+        mapper = lambda rhs: f"Attributes/OData.CSC.{attr_type}Attribute/any(att:att/Name eq {lhs} and att/OData.CSC.{attr_type}Attribute/Value eq {rhs})"
         return "(" + " or ".join(map(mapper, options)) + ")"
 
     @handle(ast.IsNull)
@@ -147,7 +144,7 @@ class CDSEEvaluator(Evaluator):
 
     @handle(ast.Attribute)
     def attribute(self, node: ast.Attribute):
-        return f'"{self.attribute_map[node.name]}"'
+        return f"'{self.attribute_map[node.name]}'"
 
     @handle(ast.Arithmetic, subclasses=True)
     def arithmetic(self, node: ast.Arithmetic, lhs, rhs):

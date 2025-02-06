@@ -22,8 +22,8 @@ plugins:
       version: 11.4.1
   - mkdocs-jupyter:
       execute: true
-      show_input: False
-      no_input: True
+      show_input: True
+      no_input: False
 
 markdown_extensions:
   - pymdownx.details

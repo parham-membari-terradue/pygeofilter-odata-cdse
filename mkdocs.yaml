@@ -22,7 +22,6 @@ plugins:
       version: 11.4.1
   - mkdocs-jupyter:
       execute: true
-      kernel_name: ipykernel
       show_input: False
       no_input: True
 

@@ -3,10 +3,8 @@
 
 name: Build & Tests
 on: [push, pull_request]
-
 permissions:
   contents: read
-
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -32,4 +30,4 @@ jobs:
       run: hatch build
     - name: Test
       run: |
-        hatch -e test run nose2 --verbose
+        hatch -e default run nose2 --verbose

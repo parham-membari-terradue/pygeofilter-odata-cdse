@@ -1,16 +1,14 @@
+from builtins import isinstance
 from datetime import date, datetime, timedelta
-import json
-from typing import Dict, Optional
-
+from pygeocdse.odata_attributes import ALL_ATTRIBUTES, get_attribute_type
 from pygeofilter import ast, values
 from pygeofilter.backends.evaluator import Evaluator, handle
 from pygeofilter.parsers.cql2_json import parse as json_parse
 from pygeofilter.util import IdempotentDict
+from typing import Dict, Optional
+import json
 import requests
 import shapely.geometry
-
-from pygeocdse.odata_attributes import ALL_ATTRIBUTES, get_attribute_type
-from builtins import isinstance
 
 COMPARISON_OP_MAP = {
     ast.ComparisonOp.EQ: "eq",

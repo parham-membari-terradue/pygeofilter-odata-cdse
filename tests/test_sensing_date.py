@@ -100,3 +100,50 @@ class TestSensingDate(unittest.TestCase):
         self.assertEqual(
             expected, to_cdse(cql2_filter)
         )
+
+    '''
+    interval with deltas
+    '''
+
+    def test_content_date_start_inclusive_invalid_delta_interval(self):
+        cql2_filter = {
+            "op": "t_after",
+            "args": [
+                {"property": "ContentDate/Start"},
+                {"interval": ["PT4S", "PT4S"]},
+            ],
+        }
+        '''
+        expected = "ContentDate/Start gt 2023-02-01T00:00:00+00:00 and ContentDate/Start le 2023-02-01T23:59:59+00:00"
+        self.assertEqual(
+            expected, to_cdse(cql2_filter)
+        )
+        '''
+        with self.assertRaises(ValueError):
+            to_cdse(cql2_filter)
+
+    def test_content_date_start_inclusive_delta_interval(self):
+        cql2_filter = {
+            "op": "t_after",
+            "args": [
+                {"property": "ContentDate/Start"},
+                {"interval": ["2023-02-28T00:00:00Z", "PT4S"]},
+            ],
+        }
+        expected = "ContentDate/Start gt 2023-02-28T00:00:00+00:00 and ContentDate/Start le 2023-02-28T00:00:04+00:00"
+        self.assertEqual(
+            expected, to_cdse(cql2_filter)
+        )
+
+    def test_content_date_start_inclusive_delta2_interval(self):
+        cql2_filter = {
+            "op": "t_after",
+            "args": [
+                {"property": "ContentDate/Start"},
+                {"interval": ["PT4S", "2023-02-28T00:00:00Z"]},
+            ],
+        }
+        expected = "ContentDate/Start gt 2023-02-27T23:59:56+00:00 and ContentDate/Start le 2023-02-28T00:00:00+00:00"
+        self.assertEqual(
+            expected, to_cdse(cql2_filter)
+        )

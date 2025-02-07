@@ -1,4 +1,4 @@
-from datetime import date, datetime
+from datetime import date, datetime, timedelta
 import json
 from typing import Dict, Optional
 
@@ -10,6 +10,7 @@ import requests
 import shapely.geometry
 
 from pygeocdse.odata_attributes import ALL_ATTRIBUTES, get_attribute_type
+from builtins import isinstance
 
 COMPARISON_OP_MAP = {
     ast.ComparisonOp.EQ: "eq",
@@ -98,35 +99,43 @@ class CDSEEvaluator(Evaluator):
 
     @handle(ast.TimeAfter)
     def timeAfter(self, node, lhs, rhs):
-        if isinstance(node.rhs, values.Interval):
-            return f"{node.lhs.name} gt {node.rhs.start.isoformat()} and {node.lhs.name} le {node.rhs.end.isoformat()}"
+        if isinstance(rhs, values.Interval):
+            return f"{node.lhs.name} gt {rhs.start.isoformat()} and {node.lhs.name} le {rhs.end.isoformat()}"
 
-        return f"{node.lhs.name} gt {node.rhs.isoformat()}"
+        return f"{node.lhs.name} gt {rhs}"
 
     @handle(ast.TimeBefore)
     def timeBefore(self, node, lhs, rhs):
-        if isinstance(node.rhs, values.Interval):
-            return f"{node.lhs.name} ge {node.rhs.start.isoformat()} and {node.lhs.name} lt {node.rhs.end.isoformat()}"
+        if isinstance(rhs, values.Interval):
+            return f"{node.lhs.name} ge {rhs.start.isoformat()} and {node.lhs.name} lt {rhs.end.isoformat()}"
 
-        return f"{node.lhs.name} lt {node.rhs.isoformat()}"
+        return f"{node.lhs.name} lt {rhs}"
 
     @handle(ast.TimeBegins)
     def timeBegin(self, node, lhs, rhs):
-        if isinstance(node.rhs, values.Interval):
-            return f"{node.lhs.name} ge {node.rhs.start.isoformat()} and {node.lhs.name} le {node.rhs.end.isoformat()}"
+        if isinstance(rhs, values.Interval):
+            return f"{node.lhs.name} ge {rhs.start.isoformat()} and {node.lhs.name} le {rhs.end.isoformat()}"
 
-        return f"{node.lhs.name} ge {node.rhs.isoformat()}"
+        return f"{node.lhs.name} ge {rhs}"
 
     @handle(ast.TimeEnds)
     def timeEnds(self, node, lhs, rhs):
-        if isinstance(node.rhs, values.Interval):
-            return f"{node.lhs.name} ge {node.rhs.start.isoformat()} and {node.lhs.name} le {node.rhs.end.isoformat()}"
+        if isinstance(rhs, values.Interval):
+            return f"{node.lhs.name} ge {rhs.start.isoformat()} and {node.lhs.name} le {rhs.end.isoformat()}"
 
-        return f"{node.lhs.name} le {node.rhs.isoformat()}"
+        return f"{node.lhs.name} le {rhs}"
 
     @handle(values.Interval)
     def interval(self, node, start, end):
-        return node
+        if isinstance(node.start, timedelta) and isinstance(node.end, timedelta):
+            raise ValueError(f"Both 'start' {start} and 'end' {end} parameters cannot be time deltas")
+
+        if isinstance(node.start, timedelta):
+            return values.Interval(node.end - node.start, node.end)
+        elif isinstance(node.end, timedelta):
+            return values.Interval(node.start, node.start + node.end)
+        else:
+            return node
 
     '''
     Spatial comparison handling
@@ -160,6 +169,8 @@ class CDSEEvaluator(Evaluator):
     def literal(self, node):
         if isinstance(node, str):
             return f"'{node}'"
+        elif (isinstance(node, date) or isinstance(node, datetime)) and not isinstance(node, timedelta):
+            return node.isoformat()
         else:
             # TODO:
             return str(node)

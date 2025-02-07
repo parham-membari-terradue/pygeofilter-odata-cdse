@@ -57,7 +57,7 @@ extra_javascript:
   - https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js
 
 nav:
-  - Introduction: index.md
+  - Introduction: index.ipynb
   - Supported attributes: attributes.md
   - Supported operators:
     - Logical and Comparison operators: logical_comparison_op.ipynb

@@ -12,6 +12,7 @@ license = "MIT"
 keywords = []
 authors = [
   { name = "Fabrice Brito", email = "fabrice.brito@terradue.com" },
+  { name = "Simone Tripodi", email = "simone.tripodi@terradue.com" },
 ]
 classifiers = [
   "Development Status :: 4 - Beta",
@@ -34,9 +35,9 @@ dependencies = [
 ]
 
 [project.urls]
-Documentation = "https://github.com/Fabrice Brito/pygeocdse#readme"
-Issues = "https://github.com/Fabrice Brito/pygeocdse/issues"
-Source = "https://github.com/Fabrice Brito/pygeocdse"
+Documentation = "https://github.com/Terradue/pygeofilter-odata-cdse#readme"
+Issues = "https://github.com/Terradue/pygeofilter-odata-cdse/issues"
+Source = "https://github.com/Terradue/pygeofilter-odata-cdse"
 
 [tool.hatch.version]
 path = "src/pygeocdse/__about__.py"

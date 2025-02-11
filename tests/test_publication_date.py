@@ -38,7 +38,7 @@ class TestPublicationDate(unittest.TestCase):
                 },
             ],
         }
-        expected = "PublicationDate gt 2023-02-01T00:00:00+00:00 and PublicationDate lt 2023-02-28T23:59:59+00:00"
+        expected = "PublicationDate gt 2023-02-01T00:00:00Z and PublicationDate lt 2023-02-28T23:59:59Z"
         self.assertEqual(
             expected, to_cdse(cql2_filter)
         )
@@ -63,7 +63,7 @@ class TestPublicationDate(unittest.TestCase):
                 },
             ],
         }
-        expected = "PublicationDate ge 2023-02-01T00:00:00+00:00 and PublicationDate le 2023-02-28T23:59:59+00:00"
+        expected = "PublicationDate ge 2023-02-01T00:00:00Z and PublicationDate le 2023-02-28T23:59:59Z"
         self.assertEqual(
             expected, to_cdse(cql2_filter)
         )
@@ -80,7 +80,7 @@ class TestPublicationDate(unittest.TestCase):
                  {"interval": ["2023-02-01T00:00:00Z", "2023-02-01T23:59:59Z"]},
             ]
         }
-        expected = "PublicationDate gt 2023-02-01T00:00:00+00:00 and PublicationDate le 2023-02-01T23:59:59+00:00"
+        expected = "PublicationDate gt 2023-02-01T00:00:00Z and PublicationDate le 2023-02-01T23:59:59Z"
         self.assertEqual(
             expected, to_cdse(cql2_filter)
         )
@@ -93,7 +93,7 @@ class TestPublicationDate(unittest.TestCase):
                  {"interval": ["2023-02-01T00:00:00Z", "2023-02-01T23:59:59Z"]},
             ]
         }
-        expected = "PublicationDate ge 2023-02-01T00:00:00+00:00 and PublicationDate lt 2023-02-01T23:59:59+00:00"
+        expected = "PublicationDate ge 2023-02-01T00:00:00Z and PublicationDate lt 2023-02-01T23:59:59Z"
         self.assertEqual(
             expected, to_cdse(cql2_filter)
         )
@@ -106,7 +106,7 @@ class TestPublicationDate(unittest.TestCase):
                  {"interval": ["2023-02-01T00:00:00Z", "2023-02-01T23:59:59Z"]},
             ]
         }
-        expected = "PublicationDate ge 2023-02-01T00:00:00+00:00 and PublicationDate le 2023-02-01T23:59:59+00:00"
+        expected = "PublicationDate ge 2023-02-01T00:00:00Z and PublicationDate le 2023-02-01T23:59:59Z"
         self.assertEqual(
             expected, to_cdse(cql2_filter)
         )
@@ -119,7 +119,7 @@ class TestPublicationDate(unittest.TestCase):
                  {"interval": ["2023-02-01T00:00:00Z", "2023-02-01T23:59:59Z"]},
             ]
         }
-        expected = "PublicationDate ge 2023-02-01T00:00:00+00:00 and PublicationDate le 2023-02-01T23:59:59+00:00"
+        expected = "PublicationDate ge 2023-02-01T00:00:00Z and PublicationDate le 2023-02-01T23:59:59Z"
         self.assertEqual(
             expected, to_cdse(cql2_filter)
         )

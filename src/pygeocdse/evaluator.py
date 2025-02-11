@@ -27,6 +27,10 @@ ARITHMETIC_OP_MAP = {
 }
 
 
+def date_format(date):
+    return date.strftime("%Y-%m-%dT%H:%M:%S%Z")
+
+
 class CDSEEvaluator(Evaluator):
 
     def __init__(self, attribute_map: Dict[str, str], function_map: Dict[str, str]):
@@ -98,28 +102,28 @@ class CDSEEvaluator(Evaluator):
     @handle(ast.TimeAfter)
     def timeAfter(self, node, lhs, rhs):
         if isinstance(rhs, values.Interval):
-            return f"{node.lhs.name} gt {rhs.start.isoformat()} and {node.lhs.name} le {rhs.end.isoformat()}"
+            return f"{node.lhs.name} gt {date_format(rhs.start)} and {node.lhs.name} le {date_format(rhs.end)}"
 
         return f"{node.lhs.name} gt {rhs}"
 
     @handle(ast.TimeBefore)
     def timeBefore(self, node, lhs, rhs):
         if isinstance(rhs, values.Interval):
-            return f"{node.lhs.name} ge {rhs.start.isoformat()} and {node.lhs.name} lt {rhs.end.isoformat()}"
+            return f"{node.lhs.name} ge {date_format(rhs.start)} and {node.lhs.name} lt {date_format(rhs.end)}"
 
         return f"{node.lhs.name} lt {rhs}"
 
     @handle(ast.TimeBegins)
     def timeBegin(self, node, lhs, rhs):
         if isinstance(rhs, values.Interval):
-            return f"{node.lhs.name} ge {rhs.start.isoformat()} and {node.lhs.name} le {rhs.end.isoformat()}"
+            return f"{node.lhs.name} ge {date_format(rhs.start)} and {node.lhs.name} le {date_format(rhs.end)}"
 
         return f"{node.lhs.name} ge {rhs}"
 
     @handle(ast.TimeEnds)
     def timeEnds(self, node, lhs, rhs):
         if isinstance(rhs, values.Interval):
-            return f"{node.lhs.name} ge {rhs.start.isoformat()} and {node.lhs.name} le {rhs.end.isoformat()}"
+            return f"{node.lhs.name} ge {date_format(rhs.start)} and {node.lhs.name} le {date_format(rhs.end)}"
 
         return f"{node.lhs.name} le {rhs}"
 
@@ -168,7 +172,7 @@ class CDSEEvaluator(Evaluator):
         if isinstance(node, str):
             return f"'{node}'"
         elif (isinstance(node, date) or isinstance(node, datetime)) and not isinstance(node, timedelta):
-            return node.isoformat()
+            return date_format(node)
         else:
             # TODO:
             return str(node)

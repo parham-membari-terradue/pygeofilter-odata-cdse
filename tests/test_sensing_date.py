@@ -38,7 +38,7 @@ class TestSensingDate(unittest.TestCase):
                 },
             ],
         }
-        expected = "ContentDate/Start gt 2023-02-01T00:00:00+00:00 and ContentDate/Start lt 2023-02-28T23:59:59+00:00"
+        expected = "ContentDate/Start gt 2023-02-01T00:00:00Z and ContentDate/Start lt 2023-02-28T23:59:59Z"
         self.assertEqual(
             expected, to_cdse(cql2_filter)
         )
@@ -65,7 +65,7 @@ class TestSensingDate(unittest.TestCase):
                 },
             ],
         }
-        expected = "ContentDate/Start ge 2023-02-01T00:00:00+00:00 and ContentDate/End le 2023-02-28T23:59:59+00:00"
+        expected = "ContentDate/Start ge 2023-02-01T00:00:00Z and ContentDate/End le 2023-02-28T23:59:59Z"
         self.assertEqual(
             expected, to_cdse(cql2_filter)
         )
@@ -96,7 +96,7 @@ class TestSensingDate(unittest.TestCase):
                 },
             ],
         }
-        expected = "ContentDate/Start gt 2023-02-01T00:00:00+00:00 and ContentDate/Start le 2023-02-01T23:59:59+00:00 and ContentDate/End ge 2023-02-28T00:00:00+00:00 and ContentDate/End lt 2023-02-28T23:59:59+00:00"
+        expected = "ContentDate/Start gt 2023-02-01T00:00:00Z and ContentDate/Start le 2023-02-01T23:59:59Z and ContentDate/End ge 2023-02-28T00:00:00Z and ContentDate/End lt 2023-02-28T23:59:59Z"
         self.assertEqual(
             expected, to_cdse(cql2_filter)
         )
@@ -114,7 +114,7 @@ class TestSensingDate(unittest.TestCase):
             ],
         }
         '''
-        expected = "ContentDate/Start gt 2023-02-01T00:00:00+00:00 and ContentDate/Start le 2023-02-01T23:59:59+00:00"
+        expected = "ContentDate/Start gt 2023-02-01T00:00:00Z and ContentDate/Start le 2023-02-01T23:59:59Z"
         self.assertEqual(
             expected, to_cdse(cql2_filter)
         )
@@ -130,7 +130,7 @@ class TestSensingDate(unittest.TestCase):
                 {"interval": ["2023-02-28T00:00:00Z", "PT4S"]},
             ],
         }
-        expected = "ContentDate/Start gt 2023-02-28T00:00:00+00:00 and ContentDate/Start le 2023-02-28T00:00:04+00:00"
+        expected = "ContentDate/Start gt 2023-02-28T00:00:00Z and ContentDate/Start le 2023-02-28T00:00:04Z"
         self.assertEqual(
             expected, to_cdse(cql2_filter)
         )
@@ -143,7 +143,7 @@ class TestSensingDate(unittest.TestCase):
                 {"interval": ["PT4S", "2023-02-28T00:00:00Z"]},
             ],
         }
-        expected = "ContentDate/Start gt 2023-02-27T23:59:56+00:00 and ContentDate/Start le 2023-02-28T00:00:00+00:00"
+        expected = "ContentDate/Start gt 2023-02-27T23:59:56Z and ContentDate/Start le 2023-02-28T00:00:00Z"
         self.assertEqual(
             expected, to_cdse(cql2_filter)
         )

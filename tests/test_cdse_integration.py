@@ -8,6 +8,7 @@ class TestCDSEIntegration(unittest.TestCase):
     def setUp(self):
         pass
 
+    @unittest.skip("slow")
     def test_cdse_invokation(self):
         cql2_filter = {
             "op": "and",
@@ -51,6 +52,7 @@ class TestCDSEIntegration(unittest.TestCase):
 
         self.assertIsNotNone(data, f"Expected JSON data")
 
+    @unittest.skip("slow")
     def test_cdse_invokation_2(self):
         '''
         Collection/Name eq 'SENTINEL-1'

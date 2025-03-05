@@ -43,6 +43,34 @@ class TestSensingDate(unittest.TestCase):
             expected, to_cdse(cql2_filter)
         )
 
+    def test_content_date_start_half_open(self):
+        # To search for products acquired between two dates,
+        # greater or equal than the start data and less than the end date
+        # (to exclude duplicates that are precisely at the border between neighbouring intervals)
+        cql2_filter = {
+            "op": "and",
+            "args": [
+                {
+                    "op": "t_begins",
+                    "args": [
+                        {"property": "ContentDate/Start"},
+                        {"timestamp": "2023-02-01T00:00:00Z"}
+                    ],
+                },
+                {
+                    "op": "t_before",
+                    "args": [
+                        {"property": "ContentDate/Start"},
+                        {"timestamp": "2023-02-28T23:59:59Z"}
+                    ],
+                },
+            ],
+        }
+        expected = "ContentDate/Start ge 2023-02-01T00:00:00Z and ContentDate/Start lt 2023-02-28T23:59:59Z"
+        self.assertEqual(
+            expected, to_cdse(cql2_filter)
+        )
+
     def test_content_date_start_inclusive(self):
         # Usually, there are two parameters describing the ContentDate (Acquisition Dates) for a product - Start and End.
         # Depending on what the user is looking for, these parameters can be mixed

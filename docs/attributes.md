@@ -4,154 +4,154 @@ As stated, this library was initially developed to support CDSE use cases only, 
 
 ## Sentinel-1
 
-| Name                              | Type             |
-|-----------------------------------|------------------|
-| `productType`                     | `String`         |
-| `origin`                          | `String`         |
-| `datatakeID`                      | `Integer`        |
-| `timeliness`                      | `String`         |
-| `coordinates`                     | `String`         |
-| `cycleNumber`                     | `Integer`        |
-| `orbitNumber`                     | `Integer`        |
-| `sliceNumber`                     | `Integer`        |
-| `totalSlices`                     | `Integer`        |
-| `productClass`                    | `String`         |
-| `processorName`                   | `String`         |
-| `orbitDirection`                  | `String`         |
-| `processingDate`                  | `DateTimeOffset` |
-| `operationalMode`                 | `String`         |
-| `processingLevel`                 | `String`         |
-| `swathIdentifier`                 | `String`         |
-| `processingCenter`                | `String`         |
-| `processorVersion`                | `String`         |
-| `segmentStartTime`                | `DateTimeOffset` |
-| `sliceProductFlag`                | `Boolean`        |
-| `platformShortName`               | `String`         |
-| `productGeneration`               | `DateTimeOffset` |
-| `processingBaseline`              | `String`         |
-| `productComposition`              | `String`         |
-| `instrumentShortName`             | `String`         |
-| `relativeOrbitNumber`             | `Integer`        |
-| `polarisationChannels`            | `String`         |
-| `productConsolidation`            | `String`         |
-| `platformSerialIdentifier`        | `String`         |
-| `instrumentConfigurationID`       | `Integer`        |
-| `startTimeFromAscendingNode`      | `Double`         |
-| `completionTimeFromAscendingNode` | `Double`         |
+| Name                              | Type             | STAC property                    |
+|-----------------------------------|------------------|----------------------------------|
+| `platformShortName`               | `String`         | `constellation`                  |
+| `platformSerialIdentifier`        | `String`         | `platform`                       |
+| `productType`                     | `String`         | `product:type`                   |
+| `orbitNumber`                     | `Integer`        | `sat:absolute_orbit`             |
+| `relativeOrbitNumber`             | `Integer`        | `sat:relative_orbit`             |
+| `orbitDirection`                  | `String`         | `sat:orbit_state`                |
+| `processorName`                   | `String`         | `processing:software`            |
+| `processorVersion`                | `String`         | `processing:software`            |
+| `processingCenter`                | `String`         | `processing:facility`            |
+| `operationalMode`                 | `String`         | `sar:instrument_mode`            |
+| `polarisationChannels`            | `String`         | `sar:polarizations`              |
+| `datatakeID`                      | `Integer`        | `s1:datatake_id`                 |
+| `swathIdentifier`                 | `String`         | `s1:swaths`                      |
+| `timeliness`                      | `String`         | `s1:product_timeliness`          |
+| `sliceNumber`                     | `Integer`        | `s1:slice_number`                |
+| `totalSlices`                     | `Integer`        | `s1:total_slices`                |
+| `instrumentConfigurationID`       | `Integer`        | `s1:instrument_configuration_ID` |
+| `processingDate`                  | `DateTimeOffset` | `s1:processing_datetime`         |
+| `processingLevel`                 | `String`         | `s1:processing_level`            |
+| `coordinates`                     | `String`         |                                  |
+| `cycleNumber`                     | `Integer`        |                                  |
+| `instrumentShortName`             | `String`         |                                  |
+| `segmentStartTime`                | `DateTimeOffset` |                                  |
+| `sliceProductFlag`                | `Boolean`        |                                  |
+| `origin`                          | `String`         |                                  |
+| `productGeneration`               | `DateTimeOffset` |                                  |
+| `processingBaseline`              | `String`         |                                  |
+| `productClass`                    | `String`         |                                  |
+| `productComposition`              | `String`         |                                  |
+| `productConsolidation`            | `String`         |                                  |
+| `startTimeFromAscendingNode`      | `Double`         |                                  |
+| `completionTimeFromAscendingNode` | `Double`         |                                  |
 
 ## Sentinel-1-RTC
 
-| Name                       | Type      |
-|----------------------------|-----------|
-| `productType`              | `String`  |
-| `authority`                | `String`  |
-| `orbitNumber`              | `Integer` |
-| `orbitDirection`           | `String`  |
-| `operationalMode`          | `String`  |
-| `processingLevel`          | `String`  |
-| `platformShortName`        | `String`  |
-| `spatialResolution`        | `Integer` |
-| `instrumentShortName`      | `String`  |
-| `relativeOrbitNumber`      | `Integer` |
-| `polarisationChannels`     | `String`  |
-| `platformSerialIdentifier` | `String`  |
+| Name                       | Type      | STAC property         |
+|----------------------------|-----------|-----------------------|
+| `platformShortName`        | `String`  | `constellation`       |
+| `platformSerialIdentifier` | `String`  | `platform`            |
+| `productType`              | `String`  | `product:type`        |
+| `instrumentShortName`      | `String`  | `instruments`         |
+| `orbitNumber`              | `Integer` | `sat:absolute_orbit`  |
+| `relativeOrbitNumber`      | `Integer` | `sat:relative_orbit`  |
+| `orbitDirection`           | `String`  | `sat:orbit_state`     |
+| `operationalMode`          | `String`  | `sar:instrument_mode` |
+| `polarisationChannels`     | `String`  | `sar:polarizations`   |
+| `processingLevel`          | `String`  | `s1:processing_level` |
+| `spatialResolution`        | `Integer` |                       |
+| `authority`                | `String`  |                       |
 
 ## Sentinel-2
 
-| Name                       | Type             |
-|----------------------------|------------------|
-| `productType`              | `String`         |
-| `origin`                   | `String`         |
-| `tileId`                   | `String`         |
-| `cloudCover`               | `Double`         |
-| `coordinates`              | `String`         |
-| `datastripId`              | `String`         |
-| `orbitNumber`              | `Integer`        |
-| `qualityInfo`              | `Integer`        |
-| `qualityStatus`            | `String`         |
-| `sourceProduct`            | `String`         |
-| `processingDate`           | `DateTimeOffset` |
-| `productGroupId`           | `String`         |
-| `lastOrbitNumber`          | `Integer`        |
-| `operationalMode`          | `String`         |
-| `processingLevel`          | `String`         |
-| `processingCenter`         | `String`         |
-| `processorVersion`         | `String`         |
-| `granuleIdentifier`        | `String`         |
-| `platformShortName`        | `String`         |
-| `processingBaseline`       | `String`         |
-| `instrumentShortName`      | `String`         |
-| `relativeOrbitNumber`      | `Integer`        |
-| `illuminationZenithAngle`  | `Double`         |
-| `sourceProductOriginDate`  | `String`         |
-| `platformSerialIdentifier` | `String`         |
+| Name                       | Type             | STAC property            |
+|----------------------------|------------------|--------------------------|
+| `platformShortName`        | `String`         | `constellation`          |
+| `platformSerialIdentifier` | `String`         | `platform`               |
+| `instrumentShortName`      | `String`         | `instruments`            |
+| `productType`              | `String`         | `product:_type`          | 
+| `orbitNumber`              | `Integer`        | `sat:absolute_orbit`     |
+| `relativeOrbitNumber`      | `Integer`        | `sat:relative_orbit`     |
+| `processingCenter`         | `String`         | `processing:facility`    |
+| `cloudCover`               | `Double`         | `eo:cloud_cover`         |
+| `datastripId`              | `String`         | `s2:datastrip_id`        |
+| `tileId`                   | `String`         | `s2:tile_id`             |
+| `processorVersion`         | `String`         | `s2:processing_baseline` |
+| `origin`                   | `String`         |                          |
+| `coordinates`              | `String`         |                          |
+| `qualityInfo`              | `Integer`        |                          |
+| `qualityStatus`            | `String`         |                          |
+| `sourceProduct`            | `String`         |                          |
+| `processingDate`           | `DateTimeOffset` |                          |
+| `productGroupId`           | `String`         |                          |
+| `lastOrbitNumber`          | `Integer`        |                          |
+| `operationalMode`          | `String`         |                          |
+| `processingLevel`          | `String`         |                          | 
+| `granuleIdentifier`        | `String`         |                          |
+| `processingBaseline`       | `String`         |                          |
+| `illuminationZenithAngle`  | `Double`         |                          |
+| `sourceProductOriginDate`  | `String`         |                          |
 
 ## Sentinel-3
 
-| Name                       | Type             |
-|----------------------------|------------------|
-| `productType`              | `String`         |
-| `landCover`                | `Double`         |
-| `cloudCover`               | `Double`         |
-| `timeliness`               | `String`         |
-| `brightCover`              | `Double`         |
-| `coordinates`              | `String`         |
-| `cycleNumber`              | `Integer`        |
-| `orbitNumber`              | `Integer`        |
-| `coastalCover`             | `Double`         |
-| `processorName`            | `String`         |
-| `closedSeaCover`           | `Integer`        |
-| `openOceanCover`           | `Integer`        |
-| `orbitDirection`           | `String`         |
-| `processingDate`           | `DateTimeOffset` |
-| `snowOrIceCover`           | `Double`         |
-| `lastOrbitNumber`          | `Integer`        |
-| `operationalMode`          | `String`         |
-| `processingLevel`          | `String`         |
-| `processingCenter`         | `String`         |
-| `processorVersion`         | `String`         |
-| `salineWaterCover`         | `Double`         |
-| `tidalRegionCover`         | `Double`         |
-| `platformShortName`        | `String`         |
-| `baselineCollection`       | `String`         |
-| `lastOrbitDirection`       | `String`         |
-| `processingBaseline`       | `String`         |
-| `continentalIceCover`      | `Integer`        |
-| `instrumentShortName`      | `String`         |
-| `relativeOrbitNumber`      | `Integer`        |
-| `freshInlandWaterCover`    | `Double`         |
-| `lastRelativeOrbitNumber`  | `Integer`        |
-| `platformSerialIdentifier` | `String`         |
+| Name                       | Type             | STAC property              |
+|----------------------------|------------------|----------------------------|
+| `platformShortName`        | `String`         | `constellation`            |
+| `platformSerialIdentifier` | `String`         | `platform`                 |
+| `instrumentShortName`      | `String`         | `instruments`              |
+| `productType`              | `String`         | `product:type`             |
+| `orbitNumber`              | `Integer`        | `sat:absolute_orbit`       |
+| `relativeOrbitNumber`      | `Integer`        | `sat:relative_orbit`       |
+| `orbitDirection`           | `String`         | `sat:orbit_state`          |
+| `processorName`            | `String`         | `processing:software`      |
+| `processorVersion`         | `String`         | `processing:software`      |
+| `processingCenter`         | `String`         | `processing:facility`      |
+| `cloudCover`               | `Double`         | `eo:cloud_cover`           |
+| `timeliness`               | `String`         | `s3:processing_timeliness` |
+| `landCover`                | `Double`         | `s3:land`                  |
+| `coastalCover`             | `Double`         | `s3:coastal`               |
+| `brightCover`              | `Double`         |                            |
+| `coordinates`              | `String`         |                            |
+| `cycleNumber`              | `Integer`        |                            |
+| `closedSeaCover`           | `Integer`        |                            |
+| `openOceanCover`           | `Integer`        |                            |
+| `processingDate`           | `DateTimeOffset` |                            |
+| `snowOrIceCover`           | `Double`         |                            |
+| `lastOrbitNumber`          | `Integer`        |                            |
+| `operationalMode`          | `String`         |                            |
+| `processingLevel`          | `String`         |                            |
+| `salineWaterCover`         | `Double`         |                            |
+| `tidalRegionCover`         | `Double`         |                            |
+| `baselineCollection`       | `String`         |                            |
+| `lastOrbitDirection`       | `String`         |                            |
+| `processingBaseline`       | `String`         |                            |
+| `continentalIceCover`      | `Integer`        |                            |
+| `freshInlandWaterCover`    | `Double`         |                            |
+| `lastRelativeOrbitNumber`  | `Integer`        |                            |
 
 ## Sentinel-5P
 
-| Name                       | Type             |
-|----------------------------|------------------|
-| `productType`             | `String`         |
-| `doi`                      | `String`          |
-| `identifier`               | `String`         |
-| `coordinates`              | `String`         |
-| `orbitNumber`              | `Integer`        |
-| `productClass`             | `String`         |
-| `processorName`            | `String`         |
-| `qualityStatus`            | `String`         |
-| `processingDate`           | `DateTimeOffset` |
-| `processingMode`           | `String`         |
-| `acquisitionType`          | `String`         |
-| `processingLevel`          | `String`         |
-| `parentIdentifier`         | `String`         |
-| `processingCenter`         | `String`         |
-| `processorVersion`         | `String`         |
-| `platformShortName`        | `String`         |
-| `baselineCollection`       | `String`         |
-| `processingBaseline`       | `String`         |
-| `instrumentShortName`      | `String`         |
-| `platformSerialIdentifier` | `String`         |
+| Name                       | Type             | STAC property 
+|----------------------------|------------------|-----------------------|
+| `platformShortName`        | `String`         | `constellation`       |
+| `platformSerialIdentifier` | `String`         | `platform`            |
+| `instrumentShortName`      | `String`         | `instruments`         |
+| `productType`              | `String`         | `product:type`        |
+| `orbitNumber`              | `Integer`        | `sat:absolute_orbit`  |
+| `processorName`            | `String`         | `processing:software` |
+| `processorVersion`         | `String`         | `processing:software` |
+| `processingCenter`         | `String`         | `processing:facility` |
+| `doi`                      | `String`         |                       |
+| `identifier`               | `String`         |                       |
+| `coordinates`              | `String`         |                       |
+| `productClass`             | `String`         |                       |
+| `qualityStatus`            | `String`         |                       |
+| `processingDate`           | `DateTimeOffset` |                       |
+| `processingMode`           | `String`         |                       |
+| `acquisitionType`          | `String`         |                       |
+| `processingLevel`          | `String`         |                       |
+| `parentIdentifier`         | `String`         |                       |
+| `baselineCollection`       | `String`         |                       |
+| `processingBaseline`       | `String`         |                       |
 
 ## Additional Attributes
 
-| Name                       | Type             |
-|----------------------------|------------------|
+| Name                     | Type             |
+|--------------------------|------------------|
 | `Collection/Name`        | `String`         |
 | `PublicationDate`        | `DateTimeOffset` |
 | `ModificationDate`       | `DateTimeOffset` |

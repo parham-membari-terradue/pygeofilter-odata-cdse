@@ -43,7 +43,7 @@ class TestSensingDate(unittest.TestCase):
             expected, to_cdse(cql2_filter)
         )
 
-    def test_content_date_start_half_open(self):
+    def test_content_date_start_right_open(self):
         # To search for products acquired between two dates,
         # greater or equal than the start data and less than the end date
         # (to exclude duplicates that are precisely at the border between neighbouring intervals)

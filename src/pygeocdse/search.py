@@ -1,5 +1,5 @@
 import re
-from pygeocdse.evaluator import to_cdse
+from pygeocdse.evaluator import to_cdse, stac_search_to_cdse
 from typing import Dict, List, Optional
 
 """A dictionary mapping typical STAC collection names (stripped of special characters)
@@ -15,6 +15,10 @@ collection_map = {
     'sentinel2l2a': ["SENTINEL-2", "S2MSI2A"],
     'sentinel3': ["SENTINEL-3"],
     'sentinel5p': ["SENTINEL-5P"],
+}
+
+stac_search_map = {
+    'constellation': lambda op, value: "Attributes/OData.CSC.StringAttribute/any(att:att/Name eq 'platformShortName' and att/OData.CSC.StringAttribute/Value eq {0})".format(value.upper())
 }
 
 def to_cdse_query(stac_search: Dict) -> Dict:
@@ -49,7 +53,7 @@ def to_cdse_query_str(stac_search: Dict) -> str:
 def get_odata_filter(stac_collections, stac_filter):
     collection_filter = get_odata_collection_filter(stac_collections)
     if stac_filter:
-        filter = to_cdse(stac_filter)
+        filter = stac_search_to_cdse(cql2_filter=stac_filter, stac_search_map=stac_search_map)
     else:
         filter = None
     

@@ -5,7 +5,7 @@ from pygeofilter import ast, values
 from pygeofilter.backends.evaluator import Evaluator, handle
 from pygeofilter.parsers.cql2_json import parse as json_parse
 from pygeofilter.util import IdempotentDict
-from typing import Dict, Optional
+from typing import Dict, Optional, Callable
 import json
 import requests
 import shapely.geometry
@@ -33,9 +33,14 @@ def date_format(date):
 
 class CDSEEvaluator(Evaluator):
 
-    def __init__(self, attribute_map: Dict[str, str], function_map: Dict[str, str]):
+    def __init__(
+        self, attribute_map: Dict[str, str],
+        function_map: Dict[str, str],
+        stac_search_map: Dict[str, Callable]
+    ):
         self.attribute_map = attribute_map
         self.function_map = function_map
+        self.stac_search_map = stac_search_map
 
     @handle(ast.Not)
     def not_(self, node, sub):
@@ -52,6 +57,11 @@ class CDSEEvaluator(Evaluator):
 
         if "Date" in lhs:
             rhs = node.rhs
+
+        if self.stac_search_map and node.lhs.name in self.stac_search_map:
+            print("STAC SEARCH: {0} {1} {2}".format(node.lhs.name, node.op, rhs))
+            # return "HELLO"
+            return self.stac_search_map[node.lhs.name](node.op, rhs)
 
         attr_type = get_attribute_type(node.lhs.name)
         return f"Attributes/OData.CSC.{attr_type}Attribute/any(att:att/Name eq {lhs} and att/OData.CSC.{attr_type}Attribute/Value {COMPARISON_OP_MAP[node.op]} {rhs})"
@@ -90,6 +100,7 @@ class CDSEEvaluator(Evaluator):
         attr_type = get_attribute_type(node.lhs.name)
         mapper = lambda rhs: f"Attributes/OData.CSC.{attr_type}Attribute/any(att:att/Name eq {lhs} and att/OData.CSC.{attr_type}Attribute/Value eq {rhs})"
         return "(" + " or ".join(map(mapper, options)) + ")"
+
 
     @handle(ast.IsNull)
     def null(self, node, lhs):
@@ -179,15 +190,23 @@ class CDSEEvaluator(Evaluator):
 
 
 def to_cdse(cql2_filter) -> str:
-    return to_cdse_where(json_parse(cql2_filter), IdempotentDict())
+    return to_cdse_where(json_parse(cql2_filter), field_mapping=IdempotentDict())
+
+def stac_search_to_cdse(cql2_filter, stac_search_map) -> str:
+    return to_cdse_where(json_parse(cql2_filter), field_mapping=IdempotentDict(), stac_search_map=stac_search_map)
 
 
 def to_cdse_where(
     root: ast.Node,
     field_mapping: Dict[str, str],
     function_map: Optional[Dict[str, str]]=None,
+    stac_search_map: Optional[Dict[str, Callable]]=None
 ) -> str:
-    return CDSEEvaluator(field_mapping, function_map or {}).evaluate(root)
+    return CDSEEvaluator(
+        attribute_map=field_mapping,
+        function_map=function_map or {},
+        stac_search_map=stac_search_map or {}
+    ).evaluate(root)
 
 
 def http_invoke(

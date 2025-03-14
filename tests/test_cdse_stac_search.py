@@ -4,7 +4,7 @@ from loguru import logger
 from pygeofilter.parsers.cql2_json import parse as json_parse
 from pygeofilter.util import IdempotentDict
 import json
-from pygeocdse.search import to_cdse_query, to_cdse_query_str
+from pygeocdse.search import to_cdse_query, to_cdse_query_str, stac_search_map
 
 
 class TestCDSEEvaluator(unittest.TestCase):
@@ -69,6 +69,18 @@ class TestCDSEEvaluator(unittest.TestCase):
     }
 
     search_map = {
+
+        "collections": [
+            "SENTINEL-2"
+        ],
+        "filter-lang": "cql2-json",
+        "filter": {
+            "op": "=",
+            "args": [
+                { "property": "constellation" },
+                "sentinel-2"
+            ]
+        }
     }
 
 
@@ -103,7 +115,7 @@ class TestCDSEEvaluator(unittest.TestCase):
 
     def test_search_sort(self):
         expected = {
-            "$filter": "Collection/Name eq 'SENTINEL-1' and Attributes/OData.CSC.StringAttribute/any(att:att/Name eq 'platformSerialIdentifier' and att/OData.CSC.StringAttribute/Value eq 'B')",
+            '$filter': "Collection/Name eq 'SENTINEL-1' and Attributes/OData.CSC.StringAttribute/any(att:att/Name eq 'platformSerialIdentifier' and att/OData.CSC.StringAttribute/Value eq 'B')",
             '$orderby': 'ContentDate/Start desc'
         }
         actual = to_cdse_query(self.__class__.search_sort)
@@ -112,4 +124,16 @@ class TestCDSEEvaluator(unittest.TestCase):
     def test_search_sort_str(self):
         expected = "$filter=Collection/Name eq 'SENTINEL-1' and Attributes/OData.CSC.StringAttribute/any(att:att/Name eq 'platformSerialIdentifier' and att/OData.CSC.StringAttribute/Value eq 'B')&$orderby=ContentDate/Start desc"
         actual = to_cdse_query_str(self.__class__.search_sort)
+        self.assertEqual(expected, actual)
+
+    def test_search_map(self):
+        expected = {
+            '$filter': "Collection/Name eq 'SENTINEL-2' and Attributes/OData.CSC.StringAttribute/any(att:att/Name eq 'platformShortName' and att/OData.CSC.StringAttribute/Value eq 'SENTINEL-2')"
+        }
+        actual = to_cdse_query(self.__class__.search_map)
+        self.assertEqual(expected, actual)
+
+    def test_search_map_str(self):
+        expected = "$filter=Collection/Name eq 'SENTINEL-2' and Attributes/OData.CSC.StringAttribute/any(att:att/Name eq 'platformShortName' and att/OData.CSC.StringAttribute/Value eq 'SENTINEL-2')"
+        actual = to_cdse_query_str(self.__class__.search_map)
         self.assertEqual(expected, actual)

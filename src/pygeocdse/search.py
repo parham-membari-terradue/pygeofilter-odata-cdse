@@ -18,8 +18,39 @@ collection_map = {
 }
 
 stac_search_map = {
-    'constellation': lambda op, value: "Attributes/OData.CSC.StringAttribute/any(att:att/Name eq 'platformShortName' and att/OData.CSC.StringAttribute/Value eq {0})".format(value.upper())
+    'constellation': lambda op, value: get_odata_term('platformShortName', 'String', value.upper()),
+    'platform': lambda op, value: "{0} and {1}".format(get_odata_term('platformShortName', 'String', value[:-1].upper()), get_odata_term('platformSerialIdentifier', 'String', value[-1:].upper())),
+    'product:type': lambda op, value: get_odata_term('productType', 'String', value),
+    'sat:absolute_orbit': lambda op, value: get_odata_term('orbitNumber', 'Integer', value),
+    'sat:relative_orbit': lambda op, value: get_odata_term('relativeOrbitNumber', 'Integer', value),
+    'sat:orbit_state': lambda op, value: get_odata_term('orbitDirection', 'String', value.upper()),
+    # 'processing:software': lambda op, value: get_odata_term('processorName', 'String', value),
+    # 'processing:software': lambda op, value: get_odata_term('processorVersion', 'String', value),
+    'sar:instrument_mode': lambda op, value: get_odata_term('operationalMode', 'String', value.upper()),
+    'sar:polarizations': lambda op, value: get_odata_term('polarisationChannels', 'String', '&'.join(value.upper())),
+    's1:datatake_id': lambda op, value: get_odata_term('datatakeID', 'Integer', value),
+    # 's1:swaths': lambda op, value: get_odata_term('swathIdentifier', 'String', value),
+    's1:timeliness': lambda op, value: get_odata_term('timeliness', 'String', value),
+    's1:slice_number': lambda op, value: get_odata_term('sliceNumber', 'Integer', value),
+    's1:total_slices': lambda op, value: get_odata_term('totalSlices', 'Integer', value),
+    's1:instrument_configuration_ID': lambda op, value: get_odata_term('instrumentConfigurationID', 'Integer', value),
+    's1:processing_datetimes': lambda op, value: get_odata_term('processingDate', 'DateTimeOffset', value),
+    # 'instruments': lambda op, value: get_odata_term('instrumentShortName', 'String', value),
+    'eo:cloud_cover': lambda op, value: get_odata_term('cloudCover', 'Double', value),
+    's2:datastrip_id': lambda op, value: get_odata_term('datastripId', 'String', value),
+    's2:tile_id': lambda op, value: get_odata_term('tileId', 'String', value),
+    's2:processing_baseline': lambda op, value: get_odata_term('processorVersion', 'String', value),
+    's3:processing_timeliness': lambda op, value: get_odata_term('timeliness', 'String', value),
+    's3:land': lambda op, value: get_odata_term('landCover', 'Double', value),
+    's3:coastal': lambda op, value: get_odata_term('coastalCover', 'Double', value),
 }
+
+def get_odata_term(attribute_name, attribute_type, value):
+    return "Attributes/OData.CSC.{1}Attribute/any(att:att/Name eq '{0}' and att/OData.CSC.{1}Attribute/Value eq '{2}')".format(
+        attribute_name,
+        attribute_type,
+        value
+    )
 
 def to_cdse_query(stac_search: Dict) -> Dict:
     

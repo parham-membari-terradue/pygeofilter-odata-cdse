@@ -53,18 +53,20 @@ class CDSEEvaluator(Evaluator):
     @handle(ast.Comparison, subclasses=True)
     def comparison(self, node, lhs, rhs):
         if 'Collection/Name' == node.lhs.name:
-            return f"{node.lhs.name} {COMPARISON_OP_MAP.get(node.op)} {rhs}"
+            return f"{node.lhs.name} {COMPARISON_OP_MAP.get(node.op)} '{rhs}'"
 
         if "Date" in lhs:
             rhs = node.rhs
 
         if self.stac_search_map and node.lhs.name in self.stac_search_map:
-            print("STAC SEARCH: {0} {1} {2}".format(node.lhs.name, node.op, rhs))
             # return "HELLO"
             return self.stac_search_map[node.lhs.name](node.op, rhs)
 
         attr_type = get_attribute_type(node.lhs.name)
-        return f"Attributes/OData.CSC.{attr_type}Attribute/any(att:att/Name eq {lhs} and att/OData.CSC.{attr_type}Attribute/Value {COMPARISON_OP_MAP[node.op]} {rhs})"
+        if attr_type == 'String':
+            return f"Attributes/OData.CSC.{attr_type}Attribute/any(att:att/Name eq {lhs} and att/OData.CSC.{attr_type}Attribute/Value {COMPARISON_OP_MAP[node.op]} '{rhs}')"
+        else:
+            return f"Attributes/OData.CSC.{attr_type}Attribute/any(att:att/Name eq {lhs} and att/OData.CSC.{attr_type}Attribute/Value {COMPARISON_OP_MAP[node.op]} {rhs})"
 
     @handle(ast.Between)
     def between(self, node, lhs, low, high):
@@ -98,7 +100,8 @@ class CDSEEvaluator(Evaluator):
     @handle(ast.In)
     def in_(self, node, lhs, *options):
         attr_type = get_attribute_type(node.lhs.name)
-        mapper = lambda rhs: f"Attributes/OData.CSC.{attr_type}Attribute/any(att:att/Name eq {lhs} and att/OData.CSC.{attr_type}Attribute/Value eq {rhs})"
+        quote = "'" if attr_type == 'String' else ''
+        mapper = lambda rhs: f"Attributes/OData.CSC.{attr_type}Attribute/any(att:att/Name eq {lhs} and att/OData.CSC.{attr_type}Attribute/Value eq {quote}{rhs}{quote})"
         return "(" + " or ".join(map(mapper, options)) + ")"
 
 
@@ -181,7 +184,8 @@ class CDSEEvaluator(Evaluator):
     @handle(*values.LITERALS)
     def literal(self, node):
         if isinstance(node, str):
-            return f"'{node}'"
+            # return f"'{node}'"
+            return node
         elif (isinstance(node, date) or isinstance(node, datetime)) and not isinstance(node, timedelta):
             return date_format(node)
         else:

@@ -69,17 +69,20 @@ class TestCDSEEvaluator(unittest.TestCase):
     }
 
     search_map = {
-
-        "collections": [
-            "SENTINEL-2"
-        ],
+        "collections": [ "SENTINEL-2" ],
         "filter-lang": "cql2-json",
         "filter": {
             "op": "=",
-            "args": [
-                { "property": "constellation" },
-                "sentinel-2"
-            ]
+            "args": [ { "property": "constellation" }, "sentinel-2" ]
+        }
+    }
+
+    search_map_platform = {
+        "collections": [ "SENTINEL-2" ],
+        "filter-lang": "cql2-json",
+        "filter": {
+            "op": "=",
+            "args": [ { "property": "platform" }, "sentinel-2a" ]
         }
     }
 
@@ -137,3 +140,12 @@ class TestCDSEEvaluator(unittest.TestCase):
         expected = "$filter=Collection/Name eq 'SENTINEL-2' and Attributes/OData.CSC.StringAttribute/any(att:att/Name eq 'platformShortName' and att/OData.CSC.StringAttribute/Value eq 'SENTINEL-2')"
         actual = to_cdse_query_str(self.__class__.search_map)
         self.assertEqual(expected, actual)
+
+    def test_search_map_platform(self):
+        expected = {
+            '$filter': "Collection/Name eq 'SENTINEL-2' and Attributes/OData.CSC.StringAttribute/any(att:att/Name eq 'platformShortName' and att/OData.CSC.StringAttribute/Value eq 'SENTINEL-2') and Attributes/OData.CSC.StringAttribute/any(att:att/Name eq 'platformSerialIdentifier' and att/OData.CSC.StringAttribute/Value eq 'A')"
+        }
+        actual = to_cdse_query(self.__class__.search_map_platform)
+        print(actual)
+        self.assertEqual(expected, actual)
+        # self.assertEqual(1, 1)
